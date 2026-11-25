@@ -1,0 +1,61 @@
+Fidelity Hub - software e risorse di terze parti usati nel sito
+================================================================
+
+CARATTERI
+---------
+Bricolage Grotesque
+  Copyright 2022 The Bricolage Grotesque Project Authors (https://github.com/ateliertriay/bricolage)
+  Licenza: SIL Open Font License 1.1 - testo completo in assets/fonts/OFL-BricolageGrotesque.txt
+
+Figtree
+  Copyright 2022 The Figtree Project Authors (https://github.com/erikdkennedy/figtree)
+  Licenza: SIL Open Font License 1.1 - testo completo in assets/fonts/OFL-Figtree.txt
+
+I file dei caratteri sono distribuiti senza modifiche (solo suddivisi per gruppi di
+caratteri, come forniti da Google Fonts) e non sono venduti separatamente.
+
+
+LIBRERIE JAVASCRIPT
+-------------------
+three.js r170 (vendor/three.module.min.js, vendor/addons/)
+  Copyright 2010-2024 three.js authors - https://threejs.org
+  Licenza: MIT (testo sotto)
+  vendor/addons/environments/RoomEnvironment.js deriva da model-viewer di Google
+  (https://github.com/google/model-viewer), distribuito con three.js.
+
+Lenis (vendor/lenis.min.js)
+  Copyright (c) 2024 darkroom.engineering - https://github.com/darkroomengineering/lenis
+  Licenza: MIT (testo sotto)
+
+GSAP 3.12.5 e ScrollTrigger (vendor/gsap.min.js, vendor/ScrollTrigger.min.js)
+  Copyright 2024 GreenSock - https://gsap.com
+  Licenza: GSAP Standard "No Charge" License - https://gsap.com/standard-license
+  Uso gratuito consentito anche in siti commerciali.
+
+
+TESTO DELLA LICENZA MIT
+-----------------------
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+MARCHI
+------
+Apple Wallet e iPhone sono marchi di Apple Inc. Google Wallet e Android sono
+marchi di Google LLC. Sono citati solo per indicare la compatibilità del servizio;
+Fidelity Hub non è affiliato, sponsorizzato o approvato da Apple o Google.

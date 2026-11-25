@@ -7,9 +7,9 @@
   <meta name="description" content="Fidelity Hub crea la carta fedeltà digitale della tua attività: si aggiunge ad Apple Wallet e Google Wallet, raccoglie timbri e premi e ti permette di inviare notifiche push ai tuoi clienti.">
   <meta name="theme-color" content="#FD6B11">
   <link rel="icon" href="assets/favicon.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:ital,wght@0,400..800;1,400..600&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/figtree-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
   <link rel="stylesheet" href="style.css">
   <script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js", "three/addons/": "./vendor/addons/" } }</script>
 </head>
@@ -288,8 +288,8 @@
     </div>
     <div class="wrap footer__bottom">
       <span>© <span data-year>2026</span> Fidelity Hub · FOF SOLUTIONS SRLS · P.IVA 05112080238</span>
-      <span>Apple Wallet è un marchio di Apple Inc. Google Wallet è un marchio di Google LLC.</span>
-      <a href="#privacy" id="privacy">Privacy e cookie</a>
+      <span>Apple Wallet e iPhone sono marchi di Apple Inc. Google Wallet e Android sono marchi di Google LLC. Fidelity Hub non è affiliato ad Apple o Google.</span>
+      <span class="footer__links"><a href="#privacy" id="privacy">Privacy e cookie</a> · <a href="THIRD-PARTY-NOTICES.txt" target="_blank" rel="noopener">Crediti e licenze</a></span>
     </div>
   </footer>
 
@@ -322,10 +322,11 @@
       <p>I dati della richiesta di demo per il tempo necessario a gestirla e al massimo per 24 mesi dall'ultimo contatto, salvo che diventi nostro cliente: in quel caso valgono i tempi previsti dal contratto e dalla legge.</p>
 
       <h3>A chi li comunichiamo</h3>
-      <p>Solo ai fornitori che ci servono per lavorare (hosting del sito, servizio di posta elettronica), nominati responsabili del trattamento. Le pagine usano i caratteri di Google Fonts: per scaricarli il tuo browser contatta i server di Google, che riceve il tuo indirizzo IP e può trattarlo anche fuori dall'Unione Europea, con le garanzie previste dal GDPR.</p>
+      <p>Solo ai fornitori che ci servono per lavorare, nominati responsabili del trattamento: il servizio di hosting del sito (Hostinger International Ltd., con sede nell'Unione Europea) e il nostro servizio di posta elettronica. Non vendiamo né cediamo i dati a terzi.</p>
+      <p>Il sito non carica risorse da servizi esterni: caratteri, librerie e immagini sono ospitati sul nostro server, quindi visitandolo il tuo browser non contatta Google o altre piattaforme.</p>
 
       <h3>Cookie</h3>
-      <p>Questo sito non usa cookie di profilazione né strumenti di statistica o pubblicità. Non serve quindi un banner per il consenso.</p>
+      <p>Questo sito non usa cookie di profilazione né strumenti di statistica, pubblicità o tracciamento di terze parti. Per questo non serve un banner per il consenso.</p>
 
       <h3>I tuoi diritti</h3>
       <p>Puoi chiederci in qualsiasi momento di accedere ai tuoi dati, correggerli, cancellarli, limitarne l'uso, riceverne una copia o opporti al trattamento, scrivendo a <a href="mailto:info@fidelityhub.it">info@fidelityhub.it</a>. Se ritieni che il trattamento non sia corretto puoi rivolgerti al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">garanteprivacy.it</a>).</p>
