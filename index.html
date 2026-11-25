@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fidelity Hub — Carte fedeltà digitali nel Wallet dei tuoi clienti</title>
+  <meta name="description" content="Fidelity Hub crea la carta fedeltà digitale della tua attività: si aggiunge ad Apple Wallet e Google Wallet, raccoglie timbri e premi e ti permette di inviare notifiche push ai tuoi clienti.">
+  <meta name="theme-color" content="#FD6B11">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:ital,wght@0,400..800;1,400..600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js", "three/addons/": "./vendor/addons/" } }</script>
+</head>
+<body>
+  <a class="skip" href="#main">Vai al contenuto</a>
+
+  <header class="nav" id="nav">
+    <a class="nav__logo" href="#top" aria-label="Fidelity Hub, torna all'inizio"><span class="wm" aria-hidden="true"></span></a>
+    <nav class="nav__links" aria-label="Principale">
+      <a href="#storia">Come funziona</a>
+      <a href="#settori">Settori</a>
+      <a href="#vantaggi">Vantaggi</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn--orange btn--sm nav__cta" href="#demo">Richiedi una demo</a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Apri il menu"><span></span><span></span></button>
+  </header>
+  <div class="menu" id="menu" hidden>
+    <nav aria-label="Menu mobile">
+      <a href="#storia">Come funziona</a><a href="#settori">Settori</a><a href="#vantaggi">Vantaggi</a><a href="#dashboard">Dashboard</a><a href="#faq">FAQ</a><a href="#demo">Richiedi una demo</a>
+    </nav>
+  </div>
+
+  <main id="main">
+    <!-- STORIA 3D -->
+    <section class="story" id="storia" aria-label="Come funziona Fidelity Hub">
+      <div class="story__sticky" id="top">
+        <canvas class="story__canvas" aria-hidden="true"></canvas>
+        <div class="story__fallback" aria-hidden="true">
+          <div class="pass pass--orange"><div class="pass__head"><span class="pass__ic">A</span><b>Caffè Aurora</b><span class="pass__val"><small>Timbri</small>7/10</span></div><div class="pass__stamps"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div><div class="pass__fields"><span><small>Premio</small>Caffè omaggio</span><span><small>Cliente</small>Giulia R.</span></div><div class="pass__qr"></div></div>
+        </div>
+
+        <div class="story__steps wrap">
+          <div class="step step--hero is-on" data-step="0">
+            <p class="eyebrow"><span class="eyebrow__dot"></span>Per Apple Wallet e Google Wallet</p>
+            <h1 class="hero__title">La carta fedeltà che i tuoi clienti <span class="hl">non perdono più.</span></h1>
+            <p class="hero__lead">Fidelity Hub crea la carta fedeltà della tua attività e la mette nel telefono dei tuoi clienti. Timbri, premi e notifiche push, senza app da scaricare.</p>
+            <div class="hero__ctas">
+              <a class="btn btn--orange" href="#demo">Richiedi una demo gratuita <span aria-hidden="true">→</span></a>
+              <a class="btn btn--ghost" href="#s1">Scopri come funziona</a>
+            </div>
+          </div>
+          <div class="step" data-step="1" id="s1">
+            <p class="step__n">01 / 03</p>
+            <h2 class="step__title">Nel Wallet <span class="hl">in un tocco.</span></h2>
+            <p class="step__text">Il cliente inquadra il QR al bancone e la carta è nel suo telefono, accanto alle carte di pagamento. Nessuna app, nessuna registrazione lunga.</p>
+          </div>
+          <div class="step" data-step="2">
+            <p class="step__n">02 / 03</p>
+            <h2 class="step__title">Notifiche push <span class="hl">che si leggono.</span></h2>
+            <p class="step__text">Promozioni, premi e novità arrivano sulla schermata di blocco, come un messaggio. Non finiscono nello spam e non serve conoscere l'email del cliente.</p>
+          </div>
+          <div class="step" data-step="3">
+            <p class="step__n">03 / 03</p>
+            <h2 class="step__title">Timbri e premi <span class="hl">in tempo reale.</span></h2>
+            <p class="step__text">Ogni acquisto aggiorna la carta all'istante. Al decimo caffè il premio è già lì, pronto da mostrare in cassa.</p>
+          </div>
+        </div>
+
+        <ol class="story__dots" aria-hidden="true"><li class="is-on"></li><li></li><li></li><li></li></ol>
+        <p class="story__hint" aria-hidden="true">Scorri</p>
+      </div>
+    </section>
+
+    <!-- SETTORI MARQUEE -->
+    <div class="band" aria-hidden="true">
+      <div class="band__track">
+        <span>Bar e caffetterie</span><i></i><span>Ristoranti</span><i></i><span>Parrucchieri</span><i></i><span>Centri estetici</span><i></i><span>Palestre</span><i></i><span>Negozi</span><i></i><span>Farmacie</span><i></i><span>Panifici</span><i></i>
+        <span>Bar e caffetterie</span><i></i><span>Ristoranti</span><i></i><span>Parrucchieri</span><i></i><span>Centri estetici</span><i></i><span>Palestre</span><i></i><span>Negozi</span><i></i><span>Farmacie</span><i></i><span>Panifici</span><i></i>
+      </div>
+    </div>
+
+    <!-- SETTORI -->
+    <section class="sectors wrap" id="settori" aria-labelledby="set-t">
+      <div class="sectors__copy">
+        <p class="kicker">Settori</p>
+        <h2 class="h2" id="set-t">Per chiunque lavori <span class="hl">con il pubblico.</span></h2>
+        <p class="lead">Ogni attività premia i clienti a modo suo. Scegli la tua e guarda come potrebbe essere la carta.</p>
+        <div class="tabs" role="tablist" aria-label="Scegli un settore">
+          <button role="tab" aria-selected="true" data-sector="bar">Bar e caffetterie</button>
+          <button role="tab" aria-selected="false" data-sector="pizza">Ristoranti e pizzerie</button>
+          <button role="tab" aria-selected="false" data-sector="hair">Parrucchieri e barbieri</button>
+          <button role="tab" aria-selected="false" data-sector="beauty">Centri estetici</button>
+          <button role="tab" aria-selected="false" data-sector="gym">Palestre e studi</button>
+          <button role="tab" aria-selected="false" data-sector="shop">Negozi e boutique</button>
+          <button role="tab" aria-selected="false" data-sector="pharma">Farmacie</button>
+          <button role="tab" aria-selected="false" data-sector="bakery">Panifici e pasticcerie</button>
+        </div>
+      </div>
+      <div class="sectors__preview" role="tabpanel" aria-live="polite">
+        <div class="tilt" data-tilt>
+          <div class="pass pass--live" id="livePass">
+            <div class="pass__head"><span class="pass__ic" data-f="ic">A</span><b data-f="name">Caffè Aurora</b><span class="pass__val"><small data-f="unitLabel">Timbri</small><span data-f="value">7/10</span></span></div>
+            <div class="pass__stamps" data-f="stamps"></div>
+            <div class="pass__fields"><span><small>Premio</small><span data-f="reward">Caffè omaggio</span></span><span><small>Cliente</small>Giulia R.</span></div>
+            <div class="pass__qr"></div>
+            <span class="pass__brand wm" aria-hidden="true"></span>
+          </div>
+        </div>
+        <p class="sectors__rule"><b data-f="rule">Ogni 10 caffè, uno lo offri tu.</b><span data-f="idea">Idea notifica: «Piove? Il cappuccino oggi lo offriamo noi dalle 15 alle 17.»</span></p>
+      </div>
+    </section>
+
+    <!-- VANTAGGI -->
+    <section class="perks" id="vantaggi" aria-labelledby="perk-t">
+      <div class="wrap">
+        <div class="perks__head">
+          <p class="kicker">Vantaggi</p>
+          <h2 class="h2" id="perk-t">Più clienti che <span class="hl">tornano.</span></h2>
+        </div>
+        <div class="bento">
+          <article class="tile tile--big tile--dark">
+            <div class="tile__art art-push" aria-hidden="true">
+              <div class="np np--3"><span class="np__ic"></span><span><b>Fit Lab <em>2 h fa</em></b><small>Ti aspettiamo domani alle 18!</small></span></div>
+              <div class="np np--2"><span class="np__ic"></span><span><b>Pizzeria Da Gino <em>1 h fa</em></b><small>Stasera la seconda pizza costa la metà.</small></span></div>
+              <div class="np np--1"><span class="np__ic"></span><span><b>Caffè Aurora <em>ora</em></b><small>Ti manca un timbro al caffè omaggio!</small></span></div>
+            </div>
+            <h3>Notifiche push prioritarie</h3>
+            <p>Arrivano sulla schermata di blocco del cliente. Le scrivi in un minuto e le mandi a tutti o solo a chi non passa da un po'.</p>
+          </article>
+          <article class="tile">
+            <div class="tile__art art-app" aria-hidden="true"><span class="nope">App</span></div>
+            <h3>Niente app da scaricare</h3>
+            <p>La carta vive in Apple Wallet e Google Wallet, già presenti su ogni smartphone.</p>
+          </article>
+          <article class="tile tile--orange">
+            <div class="tile__art art-stamps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <h3>Timbri e punti digitali</h3>
+            <p>Raccolta punti, timbri, livelli o cashback: scegli la meccanica giusta per te.</p>
+          </article>
+          <article class="tile">
+            <div class="tile__art art-geo" aria-hidden="true"><span class="pin"></span></div>
+            <h3>Ti ricorda quando passa vicino</h3>
+            <p>La carta può comparire sulla schermata di blocco quando il cliente è vicino al tuo negozio.</p>
+          </article>
+          <article class="tile">
+            <div class="tile__art art-paper" aria-hidden="true"><span class="paper"></span></div>
+            <h3>Addio carte di cartone</h3>
+            <p>Niente più tessere perse, dimenticate a casa o timbrate due volte. E zero costi di stampa.</p>
+          </article>
+          <article class="tile">
+            <div class="tile__art art-os" aria-hidden="true"><span>iPhone</span><span>Android</span></div>
+            <h3>iPhone e Android</h3>
+            <p>Una sola carta per Apple Wallet e Google Wallet. Ci pensiamo noi alla compatibilità.</p>
+          </article>
+          <article class="tile tile--dark">
+            <div class="tile__art art-coupon" aria-hidden="true"><span>-20%</span></div>
+            <h3>Coupon e offerte a tempo</h3>
+            <p>Sconti per il compleanno, offerte del giorno, premi per chi porta un amico.</p>
+          </article>
+          <article class="tile tile--wide">
+            <div class="tile__art art-chart" aria-hidden="true"><i style="--h:.35"></i><i style="--h:.5"></i><i style="--h:.42"></i><i style="--h:.66"></i><i style="--h:.58"></i><i style="--h:.8"></i><i style="--h:.92"></i></div>
+            <h3>Conosci i tuoi clienti</h3>
+            <p>Quanti sono, ogni quanto tornano, chi non vedi da un mese. Tutto in una dashboard semplice.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFRONTO -->
+    <section class="compare wrap" aria-labelledby="cmp-t">
+      <p class="kicker">Confronto</p>
+      <h2 class="h2" id="cmp-t">Perché non una <span class="hl">tessera di cartone?</span></h2>
+      <div class="table-wrap">
+        <table class="cmp">
+          <thead><tr><th scope="col"><span class="sr">Caratteristica</span></th><th scope="col">Carta di cartone</th><th scope="col">App dedicata</th><th scope="col" class="cmp__us">Fidelity Hub</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Il cliente deve scaricare qualcosa</th><td><span class="y">No</span></td><td><span class="n">Sì</span></td><td class="cmp__us"><span class="y">No</span></td></tr>
+            <tr><th scope="row">Si può perdere o dimenticare</th><td><span class="n">Sì</span></td><td><span class="y">No</span></td><td class="cmp__us"><span class="y">No</span></td></tr>
+            <tr><th scope="row">Notifiche push ai clienti</th><td><span class="n">No</span></td><td><span class="y">Sì</span></td><td class="cmp__us"><span class="y">Sì</span></td></tr>
+            <tr><th scope="row">Dati e statistiche</th><td><span class="n">No</span></td><td><span class="y">Sì</span></td><td class="cmp__us"><span class="y">Sì</span></td></tr>
+            <tr><th scope="row">Costo di sviluppo</th><td>Basso</td><td>Alto</td><td class="cmp__us">Basso</td></tr>
+            <tr><th scope="row">Pronta in</th><td>Una settimana</td><td>Mesi</td><td class="cmp__us">Pochi giorni</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- COME FUNZIONA PER TE -->
+    <section class="how" aria-labelledby="how-t">
+      <div class="wrap">
+        <p class="kicker">Per la tua attività</p>
+        <h2 class="h2" id="how-t">Parti in <span class="hl">tre passi.</span></h2>
+        <ol class="how__steps">
+          <li><span class="how__n">1</span><h3>Disegniamo la tua carta</h3><p>Logo, colori, premi e regole. La prepariamo noi e la approvi tu.</p></li>
+          <li><span class="how__n">2</span><h3>I clienti la aggiungono</h3><p>Ti diamo il QR da mettere al bancone, sullo scontrino e sui social. Un tocco e sono iscritti.</p></li>
+          <li><span class="how__n">3</span><h3>Tu premi e comunichi</h3><p>Timbri dal telefono, premi automatici e notifiche quando vuoi tu.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="dash wrap" id="dashboard" aria-labelledby="dash-t">
+      <div class="dash__copy">
+        <p class="kicker">Dashboard</p>
+        <h2 class="h2" id="dash-t">Scrivi una notifica. <span class="hl">Guarda dove arriva.</span></h2>
+        <p class="lead">Dalla dashboard scrivi il messaggio, scegli a chi mandarlo e lo vedi arrivare. Prova qui sotto.</p>
+        <form class="composer" id="composer" onsubmit="return false">
+          <label for="msg">Il tuo messaggio</label>
+          <textarea id="msg" maxlength="110" rows="3">Solo oggi: colazione 2×1 fino alle 11. Mostra la carta in cassa ☕</textarea>
+          <div class="composer__row">
+            <fieldset class="seg"><legend class="sr">Destinatari</legend>
+              <label><input type="radio" name="to" value="tutti" checked><span>Tutti</span></label>
+              <label><input type="radio" name="to" value="inattivi"><span>Non tornano da 30 giorni</span></label>
+            </fieldset>
+            <button class="btn btn--orange btn--sm" type="button" id="sendNotif">Invia di prova</button>
+          </div>
+          <p class="composer__count"><span id="count">0</span>/110 caratteri</p>
+        </form>
+      </div>
+      <div class="dash__panel">
+        <div class="panel">
+          <div class="panel__top"><span class="wm wm--ink" aria-hidden="true"></span><span class="panel__tag">Dati di esempio</span></div>
+          <div class="kpis">
+            <div><small>Clienti iscritti</small><strong data-count="1248">0</strong></div>
+            <div><small>Timbri questo mese</small><strong data-count="3420">0</strong></div>
+            <div><small>Notifiche aperte</small><strong data-count="68" data-suf="%">0</strong></div>
+          </div>
+          <div class="chart" aria-hidden="true"><i style="--h:.3"></i><i style="--h:.42"></i><i style="--h:.38"></i><i style="--h:.55"></i><i style="--h:.5"></i><i style="--h:.62"></i><i style="--h:.7"></i><i style="--h:.66"></i><i style="--h:.82"></i><i style="--h:.78"></i><i style="--h:.9"></i><i style="--h:1"></i></div>
+        </div>
+        <div class="mini-phone" aria-label="Anteprima della notifica sul telefono">
+          <div class="mini-phone__screen">
+            <p class="mini-phone__time">9:41</p>
+            <p class="mini-phone__date">martedì 10 novembre</p>
+            <div class="np np--live" id="notifPreview"><span class="np__ic"></span><span><b>Caffè Aurora <em>ora</em></b><small id="notifText"></small></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq wrap" id="faq" aria-labelledby="faq-t">
+      <div class="faq__head">
+        <p class="kicker">FAQ</p>
+        <h2 class="h2" id="faq-t">Domande <span class="hl">frequenti.</span></h2>
+      </div>
+      <div class="faq__list">
+        <details><summary>Funziona su iPhone e Android?<i aria-hidden="true"></i></summary><p>Sì. La carta si aggiunge ad Apple Wallet su iPhone e a Google Wallet su Android, le app già presenti sui telefoni.</p></details>
+        <details><summary>I miei clienti devono scaricare un'app?<i aria-hidden="true"></i></summary><p>No. Inquadrano il QR o aprono un link, toccano «Aggiungi al Wallet» e hanno finito.</p></details>
+        <details><summary>Come metto i timbri?<i aria-hidden="true"></i></summary><p>Dal tuo telefono o computer: inquadri il codice sulla carta del cliente e aggiungi il timbro. La carta si aggiorna da sola.</p></details>
+        <details><summary>Posso cambiare premi e grafica dopo?<i aria-hidden="true"></i></summary><p>Sì, quando vuoi. Le modifiche arrivano su tutte le carte già installate.</p></details>
+        <details><summary>E i dati dei clienti?<i aria-hidden="true"></i></summary><p>Raccogli solo i dati che scegli tu, con il consenso del cliente e nel rispetto del GDPR. Restano dati della tua attività.</p></details>
+      </div>
+    </section>
+
+    <!-- DEMO -->
+    <section class="demo" id="demo" aria-labelledby="demo-t">
+      <div class="wrap demo__grid">
+        <div class="demo__copy">
+          <h2 class="demo__title" id="demo-t">Vediamo come sarebbe <span>la tua carta.</span></h2>
+          <p>Lasciaci due dati: ti mostriamo una demo con il tuo logo e i tuoi premi, senza impegno.</p>
+          <span class="demo__mark" aria-hidden="true"></span>
+        </div>
+        <form class="form" id="demoForm" novalidate>
+          <div class="field"><label for="d-name">Nome e cognome</label><input id="d-name" name="nome" autocomplete="name" required><span class="field__err" aria-live="polite"></span></div>
+          <div class="field"><label for="d-biz">Nome dell'attività</label><input id="d-biz" name="attivita" autocomplete="organization" required><span class="field__err" aria-live="polite"></span></div>
+          <div class="field"><label for="d-type">Settore</label>
+            <select id="d-type" name="settore"><option>Bar o caffetteria</option><option>Ristorante o pizzeria</option><option>Parrucchiere o barbiere</option><option>Centro estetico</option><option>Palestra o studio</option><option>Negozio</option><option>Farmacia</option><option>Panificio o pasticceria</option><option>Altro</option></select>
+          </div>
+          <div class="field"><label for="d-mail">Email</label><input id="d-mail" name="email" type="email" autocomplete="email" required><span class="field__err" aria-live="polite"></span></div>
+          <div class="field"><label for="d-tel">Telefono (facoltativo)</label><input id="d-tel" name="telefono" type="tel" autocomplete="tel"></div>
+          <label class="check"><input type="checkbox" name="privacy" required><span>Ho letto l'<a href="#privacy">informativa privacy</a>.</span></label>
+          <span class="field__err field__err--privacy" aria-live="polite"></span>
+          <button class="btn btn--ink" type="submit">Richiedi la demo <span aria-hidden="true">→</span></button>
+          <p class="form__ok" role="status" hidden></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__top">
+      <span class="wm wm--white footer__wm" aria-hidden="true"></span>
+      <nav aria-label="Piè di pagina"><a href="#storia">Come funziona</a><a href="#settori">Settori</a><a href="#vantaggi">Vantaggi</a><a href="#faq">FAQ</a><a href="#demo">Demo</a></nav>
+    </div>
+    <div class="wrap footer__bottom">
+      <span>© <span data-year>2026</span> Fidelity Hub · FOF SOLUTIONS SRLS · P.IVA 05112080238</span>
+      <span>Apple Wallet è un marchio di Apple Inc. Google Wallet è un marchio di Google LLC.</span>
+      <a href="#privacy" id="privacy">Privacy e cookie</a>
+    </div>
+  </footer>
+
+  <dialog class="policy" id="policy" aria-labelledby="policy-t">
+    <div class="policy__head">
+      <h2 id="policy-t">Privacy e cookie</h2>
+      <button class="policy__close" type="button" aria-label="Chiudi l'informativa"></button>
+    </div>
+    <div class="policy__body" data-lenis-prevent>
+      <p class="policy__upd">Ultimo aggiornamento: novembre 2026</p>
+      <p>Questa informativa spiega come trattiamo i dati personali di chi visita questo sito e di chi ci scrive per richiedere una demo, ai sensi degli articoli 13 e 14 del Regolamento UE 2016/679 (GDPR).</p>
+
+      <h3>Titolare del trattamento</h3>
+      <p>FOF SOLUTIONS SRLS, P.IVA 05112080238, che gestisce il marchio Fidelity Hub. Per qualsiasi richiesta sulla privacy puoi scrivere a <a href="mailto:info@fidelityhub.it">info@fidelityhub.it</a>.</p>
+
+      <h3>Quali dati raccogliamo</h3>
+      <ul>
+        <li><strong>Richiesta di demo:</strong> nome e cognome, nome e settore dell'attività, email e, se lo indichi, numero di telefono. Il modulo non salva nulla sul sito: prepara un messaggio nella tua app di posta, e i dati ci arrivano solo se scegli di inviarlo.</li>
+        <li><strong>Dati di navigazione:</strong> come ogni sito, i server che lo ospitano registrano informazioni tecniche come l'indirizzo IP, il browser e l'orario di accesso, per farlo funzionare e proteggerlo.</li>
+      </ul>
+
+      <h3>Perché li usiamo e su quale base</h3>
+      <ul>
+        <li>Per risponderti e mostrarti la demo che hai chiesto: misure precontrattuali richieste da te (art. 6.1.b GDPR).</li>
+        <li>Per il funzionamento e la sicurezza del sito: nostro legittimo interesse (art. 6.1.f GDPR).</li>
+      </ul>
+      <p>Non usiamo i tuoi dati per inviarti pubblicità senza il tuo consenso e non li vendiamo a nessuno.</p>
+
+      <h3>Per quanto tempo li conserviamo</h3>
+      <p>I dati della richiesta di demo per il tempo necessario a gestirla e al massimo per 24 mesi dall'ultimo contatto, salvo che diventi nostro cliente: in quel caso valgono i tempi previsti dal contratto e dalla legge.</p>
+
+      <h3>A chi li comunichiamo</h3>
+      <p>Solo ai fornitori che ci servono per lavorare (hosting del sito, servizio di posta elettronica), nominati responsabili del trattamento. Le pagine usano i caratteri di Google Fonts: per scaricarli il tuo browser contatta i server di Google, che riceve il tuo indirizzo IP e può trattarlo anche fuori dall'Unione Europea, con le garanzie previste dal GDPR.</p>
+
+      <h3>Cookie</h3>
+      <p>Questo sito non usa cookie di profilazione né strumenti di statistica o pubblicità. Non serve quindi un banner per il consenso.</p>
+
+      <h3>I tuoi diritti</h3>
+      <p>Puoi chiederci in qualsiasi momento di accedere ai tuoi dati, correggerli, cancellarli, limitarne l'uso, riceverne una copia o opporti al trattamento, scrivendo a <a href="mailto:info@fidelityhub.it">info@fidelityhub.it</a>. Se ritieni che il trattamento non sia corretto puoi rivolgerti al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">garanteprivacy.it</a>).</p>
+    </div>
+    <div class="policy__foot"><button class="btn btn--orange btn--sm" type="button" data-close>Ho capito</button></div>
+  </dialog>
+
+  <script src="vendor/lenis.min.js"></script>
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="main.js"></script>
+  <script type="module" src="scene.js"></script>
+</body>
+</html>
