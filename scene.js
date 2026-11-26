@@ -174,7 +174,8 @@ async function init() {
   const imgs = { wm: {}, inf: {} };
   ["#FFFFFF", "#161618"].forEach((col) => { imgs.wm[col] = tint(wmImg, col); imgs.inf[col] = tint(infImg, col); });
 
-  const mobileQ = () => innerWidth < 760;
+  // telefoni e tablet in verticale: testo sopra, scena sotto (come in style.css)
+  const mobileQ = () => matchMedia("(max-width: 760px), (max-width: 1100px) and (orientation: portrait)").matches;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -324,7 +325,7 @@ async function init() {
   const vA = new THREE.Vector3(), vB = new THREE.Vector3(), qA = new THREE.Quaternion(), qB = new THREE.Quaternion(), eul = new THREE.Euler(), mtx = new THREE.Matrix4(), sclV = new THREE.Vector3();
 
   /* layout responsivo */
-  let mobile = mobileQ();
+  let mobile = mobileQ(), fitA = null, fitB = null;
   const layout = () => {
     const w = canvas.clientWidth || innerWidth, h = canvas.clientHeight || innerHeight;
     mobile = mobileQ();
@@ -333,14 +334,28 @@ async function init() {
     camera.aspect = w / h; camera.updateProjectionMatrix();
     const halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z, halfW = halfH * camera.aspect;
     if (mobile) {
-      const s = Math.min((2 * halfH * 0.6) / 2.1, (halfW * 1.7) / 2.4);
-      world.scale.setScalar(s); world.position.set(0, -halfH * 0.3, 0);
+      // su telefono la scena occupa solo lo spazio libero sotto al testo
+      const steps = [...document.querySelectorAll(".story__steps .step")];
+      const bottom = (list) => Math.max(0, ...list.map((el) => el.offsetTop + el.offsetHeight));
+      const fit = (top) => {
+        const y0 = top + 34, y1 = h - 34, rh = Math.max(h * 0.22, y1 - y0);
+        const sc = Math.min((rh / h) * 2 * halfH / 2.5, (halfW * 1.84) / 2.4);
+        return { s: sc, y: halfH - ((y0 + y1) / 2 / h) * 2 * halfH };
+      };
+      fitA = fit(bottom(steps.slice(0, 1))); fitB = fit(bottom(steps.slice(1)));
+      world.position.x = 0;
     } else {
-      const s = Math.min((2 * halfH * 0.7) / 2.1, (halfW * 0.82) / 1.9);
-      world.scale.setScalar(s); world.position.set(halfW * (innerWidth < 1100 ? 0.4 : 0.36), -halfH * 0.02, 0);
+      // su schermi larghi la scena occupa lo spazio libero a destra del testo
+      const hero = document.querySelector(".story__steps .step");
+      const x0 = (hero ? hero.offsetLeft + hero.offsetWidth : w * 0.45) + 32, x1 = w - 64, y0 = 90, y1 = h - 70;
+      const sc = Math.min(((y1 - y0) / h) * 2 * halfH / 2.4, ((x1 - x0) / w) * 2 * halfW / 2.5);
+      fitA = fitB = null;
+      world.scale.setScalar(sc);
+      world.position.set(((x0 + x1) / w - 1) * halfW, halfH - ((y0 + y1) / h) * halfH, 0);
     }
   };
   layout(); addEventListener("resize", layout);
+  if (document.fonts) document.fonts.ready.then(layout);
 
   /* puntatore */
   const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
@@ -370,8 +385,10 @@ async function init() {
 
     mouse.sx += (mouse.x - mouse.sx) * Math.min(1, dt * 3); mouse.sy += (mouse.y - mouse.sy) * Math.min(1, dt * 3);
     rig.rotation.y = reduce ? 0 : mouse.sx * 0.28; rig.rotation.x = reduce ? 0 : mouse.sy * 0.14;
-    rig.position.y = mobile ? -0.62 * (1 - phoneIn) : 0;
-    rig.scale.setScalar(mobile ? lerp(0.82, 1, phoneIn) : 1);
+    if (mobile && fitA) {
+      world.scale.setScalar(lerp(fitA.s, fitB.s, phoneIn));
+      world.position.y = lerp(fitA.y, fitB.y, phoneIn);
+    }
 
     // telefono
     phone.position.set(0, lerp(-3.4, 0, phoneIn) + (reduce ? 0 : Math.sin(t * 0.9) * 0.025 * phoneIn), 0);
