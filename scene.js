@@ -299,9 +299,9 @@ async function init() {
   const CW = 1, CH = 1.4, CR = 0.085, CD = 0.012, CB = 0.004, CZ = CD / 2 + CB;
   const cardBody = slab(CW, CH, CR, CD, CB, 3), cardFace = face(CW, CH, CR, 20);
   const cards = CARDS.map((d) => {
-    const front = new THREE.MeshPhysicalMaterial({ map: tex(drawPass(d, imgs)), roughness: 0.38, clearcoat: 1, clearcoatRoughness: 0.12, transparent: true });
-    const back = new THREE.MeshPhysicalMaterial({ map: tex(drawBack(d, imgs)), roughness: 0.42, clearcoat: 0.9, clearcoatRoughness: 0.18, transparent: true });
-    const side = new THREE.MeshPhysicalMaterial({ color: d.edge, roughness: 0.35, clearcoat: 0.6, transparent: true });
+    const front = new THREE.MeshPhysicalMaterial({ map: tex(drawPass(d, imgs)), roughness: 0.38, clearcoat: 1, clearcoatRoughness: 0.12 });
+    const back = new THREE.MeshPhysicalMaterial({ map: tex(drawBack(d, imgs)), roughness: 0.42, clearcoat: 0.9, clearcoatRoughness: 0.18 });
+    const side = new THREE.MeshPhysicalMaterial({ color: d.edge, roughness: 0.35, clearcoat: 0.6 });
     const mesh = new THREE.Group();
     const b = new THREE.Mesh(cardBody, side), f = new THREE.Mesh(cardFace, front), r = new THREE.Mesh(cardFace, back);
     f.position.z = CZ + 0.0005; r.rotation.y = Math.PI; r.position.z = -CZ - 0.0005;
@@ -349,10 +349,12 @@ async function init() {
 
   /* posizioni: apertura (libere) e nel Wallet (slot) */
   const FREE = [
-    { p: [0.2, -0.08, 0.6], r: [-0.12, -0.42, 0.07], s: 1.26 },
-    { p: [-0.7, 0.42, -0.3], r: [0.1, -0.5, 0.2], s: 1.08 },
-    { p: [0.92, 0.6, -0.75], r: [0.14, -0.22, -0.17], s: 1.02 },
-    { p: [-0.42, -0.62, -0.95], r: [-0.12, -0.3, -0.24], s: 1.0 },
+    // tutte davanti al telefono, così entrando non lo attraversano
+    // (posizione e scala compensate per la prospettiva; ben distanziate in profondità per non compenetrarsi)
+    { p: [0.172, -0.069, 1.35], r: [-0.12, -0.42, 0.07], s: 1.081 },
+    { p: [-0.581, 0.349, 0.75], r: [0.1, -0.5, 0.2], s: 0.896 },
+    { p: [0.753, 0.491, 0.45], r: [0.14, -0.22, -0.17], s: 0.835 },
+    { p: [-0.346, -0.511, 0.25], r: [-0.12, -0.3, -0.24], s: 0.824 },
   ];
   const SLOT_K = [3, 0, 1, 2]; // aurora davanti in basso, poi gino, capelli, fit dall'alto
   const slotLocal = (k, sink) => ({ p: new THREE.Vector3(0, 0.03 - k * 0.17 - sink * 0.1, 0.075 + k * 0.018 - sink * 0.05), s: 0.76 - sink * 0.04 });
@@ -407,15 +409,15 @@ async function init() {
     if (dt > 0.045) { if ((slow += dt) > 2.5 && dprCap > 1) { dprCap = 1; layout(); } } else slow = Math.max(0, slow - dt * 0.5);
 
     const Tt = FH.progress * FH.total;
-    Tsm = reduce ? Tt : Tsm + (Tt - Tsm) * Math.min(1, dt * 5);
+    Tsm = reduce ? Tt : Tsm + (Tt - Tsm) * Math.min(1, dt * 10);
     const T = Tsm;
 
     // parametri della storia
-    const phoneIn = seg(T, 0.45, 1.35);
+    const phoneIn = seg(T, 0.3, 1.05);
     const sink = seg(T, 2.0, 2.35) * (1 - seg(T, 3.7, 4.05));
     const nIn = seg(T, 2.3, 2.8), nPop = seg(T, 2.75, 3.25), nOut = seg(T, 3.45, 3.8);
     const reward = seg(T, 3.85, 4.9);
-    const fly = [seg(T, 1.05, 1.7), seg(T, 0.95, 1.6), seg(T, 0.85, 1.5), seg(T, 0.75, 1.4)];
+    const fly = [seg(T, 0.85, 1.4), seg(T, 0.75, 1.3), seg(T, 0.65, 1.2), seg(T, 0.55, 1.1)];
 
     mouse.sx += (mouse.x - mouse.sx) * Math.min(1, dt * 3); mouse.sy += (mouse.y - mouse.sy) * Math.min(1, dt * 3);
     rig.rotation.y = reduce ? 0 : mouse.sx * 0.28; rig.rotation.x = reduce ? 0 : mouse.sy * 0.14;
@@ -453,11 +455,12 @@ async function init() {
       mtx.compose(slotP, new THREE.Quaternion().setFromEuler(new THREE.Euler(0, spin, 0)), sclV.setScalar(slotS));
       mtx.premultiply(phone.matrix);
       mtx.decompose(vB, qB, sclV);
-      const arc = Math.sin(a * Math.PI) * 0.55;
+      const arc = Math.sin(a * Math.PI) * 0.35;
       c.mesh.position.lerpVectors(vA, vB, a); c.mesh.position.z += arc;
       c.mesh.quaternion.slerpQuaternions(qA, qB, a);
       c.mesh.scale.setScalar(lerp(f.s, sclV.x, a));
-      c.mats.forEach((m) => (m.opacity = op));
+      const fade = op < 0.999;
+      c.mats.forEach((m) => { m.opacity = op; if (m.transparent !== fade) { m.transparent = fade; m.needsUpdate = true; } });
       c.mesh.visible = op > 0.01;
       c.parts.forEach((p) => (p.renderOrder = 10 + k));
     });
