@@ -9,8 +9,8 @@
   <link rel="icon" href="assets/favicon.png" type="image/png">
   <link rel="preload" href="assets/fonts/bricolage-grotesque-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/figtree-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/fonts/fonts.css?v=20261127c">
-  <link rel="stylesheet" href="style.css?v=20261127c">
+  <link rel="stylesheet" href="assets/fonts/fonts.css?v=20261127d">
+  <link rel="stylesheet" href="style.css?v=20261127d">
   <script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js", "three/addons/": "./vendor/addons/" } }</script>
 </head>
 <body>
@@ -237,7 +237,7 @@
             <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>Carta fedeltà digitale</strong></span></li>
             <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>Notifiche push</strong></span></li>
           </ul>
-          <a class="btn btn--ink plan__btn" href="#demo" data-plan="Basic">Scegli Basic</a>
+          <a class="btn btn--ink plan__btn" href="#demo" aria-haspopup="dialog" data-plan="Basic">Scegli Basic</a>
         </li>
         <li class="plan plan--hot">
           <p class="plan__badge">Il più scelto</p>
@@ -247,7 +247,7 @@
             <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Tutto il piano Basic</span></li>
             <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>Geolocalizzazione: notifica quando il cliente è vicino all'attività</strong></span></li>
           </ul>
-          <a class="btn btn--orange plan__btn" href="#demo" data-plan="Medium">Scegli Medium</a>
+          <a class="btn btn--orange plan__btn" href="#demo" aria-haspopup="dialog" data-plan="Medium">Scegli Medium</a>
         </li>
         <li class="plan">
           <h3 class="plan__name">Premium</h3>
@@ -258,7 +258,7 @@
             <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>Invio email</strong></span></li>
             <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>AI centralizzata automatica</strong></span></li>
           </ul>
-          <a class="btn btn--ink plan__btn" href="#demo" data-plan="Premium">Scegli Premium</a>
+          <a class="btn btn--ink plan__btn" href="#demo" aria-haspopup="dialog" data-plan="Premium">Scegli Premium</a>
         </li>
         <li class="plan">
           <h3 class="plan__name">Enterprise</h3>
@@ -267,7 +267,7 @@
             <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Tutto il piano Premium</span></li>
             <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>Soluzioni personalizzate per catene e più sedi</strong></span></li>
           </ul>
-          <a class="btn btn--ink plan__btn" href="#demo" data-plan="Enterprise">Contattaci</a>
+          <a class="btn btn--ink plan__btn" href="#demo" aria-haspopup="dialog" data-plan="Enterprise">Contattaci</a>
         </li>
       </ul>
       <p class="pricing__note">Prezzi IVA esclusa.</p>
@@ -328,6 +328,44 @@
     </div>
   </footer>
 
+  <dialog class="pick" id="pick" aria-labelledby="pick-t">
+    <button class="policy__close pick__close" type="button" aria-label="Chiudi"></button>
+    <div class="pick__grid" data-lenis-prevent>
+      <div class="pick__plan">
+        <div class="pick__fan" aria-hidden="true"><span></span><span></span><span><b class="wm"></b><em data-p="name"></em></span></div>
+        <p class="pick__kicker">Hai scelto</p>
+        <h2 class="pick__name" id="pick-t" data-p="name"></h2>
+        <p class="pick__price" data-p="price"></p>
+        <div class="pick__switch" role="group" aria-label="Cambia piano">
+          <button type="button" data-to="Basic">Basic</button><button type="button" data-to="Medium">Medium</button><button type="button" data-to="Premium">Premium</button><button type="button" data-to="Enterprise">Enterprise</button>
+        </div>
+        <ul class="pick__list" data-p="list"></ul>
+        <dl class="pick__sum" data-p="sum"></dl>
+        <p class="pick__vat">Prezzi IVA esclusa.</p>
+      </div>
+      <div class="pick__side">
+        <form class="pick__form" id="pickForm" novalidate>
+          <h3 class="pick__title">Attiviamo la tua carta</h3>
+          <p class="pick__lead">Lasciaci i tuoi dati: ti ricontattiamo entro un giorno lavorativo e prepariamo la carta con il tuo logo.</p>
+          <div class="field"><label for="p-name">Nome e cognome</label><input id="p-name" name="nome" autocomplete="name" required><span class="field__err" aria-live="polite"></span></div>
+          <div class="field"><label for="p-biz">Nome dell'attività</label><input id="p-biz" name="attivita" autocomplete="organization" required><span class="field__err" aria-live="polite"></span></div>
+          <div class="field"><label for="p-mail">Email</label><input id="p-mail" name="email" type="email" autocomplete="email" required><span class="field__err" aria-live="polite"></span></div>
+          <div class="field"><label for="p-tel">Telefono (facoltativo)</label><input id="p-tel" name="telefono" type="tel" autocomplete="tel"></div>
+          <label class="check"><input type="checkbox" name="privacy" required><span>Ho letto l'<a href="#privacy">informativa privacy</a>.</span></label>
+          <span class="field__err field__err--privacy" aria-live="polite"></span>
+          <button class="btn btn--orange pick__go" type="submit"><span data-p="cta"></span> <span aria-hidden="true">→</span></button>
+        </form>
+        <div class="pick__ok" role="status" hidden>
+          <span class="pick__burst" aria-hidden="true"></span>
+          <svg class="pick__check" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/></svg>
+          <h3 class="pick__title">Ci siamo quasi!</h3>
+          <p class="pick__lead" data-p="ok"></p>
+          <button class="btn btn--ink" type="button" data-close>Chiudi</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <dialog class="policy" id="policy" aria-labelledby="policy-t">
     <div class="policy__head">
       <h2 id="policy-t">Privacy e cookie</h2>
@@ -372,7 +410,7 @@
   <script src="vendor/lenis.min.js"></script>
   <script src="vendor/gsap.min.js"></script>
   <script src="vendor/ScrollTrigger.min.js"></script>
-  <script src="main.js?v=20261127c"></script>
-  <script type="module" src="scene.js?v=20261127c"></script>
+  <script src="main.js?v=20261127d"></script>
+  <script type="module" src="scene.js?v=20261127d"></script>
 </body>
 </html>
