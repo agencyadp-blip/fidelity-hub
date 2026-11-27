@@ -9,8 +9,8 @@
   <link rel="icon" href="assets/favicon.png" type="image/png">
   <link rel="preload" href="assets/fonts/bricolage-grotesque-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/figtree-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/fonts/fonts.css?v=20261127">
-  <link rel="stylesheet" href="style.css?v=20261127">
+  <link rel="stylesheet" href="assets/fonts/fonts.css?v=20261127b">
+  <link rel="stylesheet" href="style.css?v=20261127b">
   <script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js", "three/addons/": "./vendor/addons/" } }</script>
 </head>
 <body>
@@ -23,6 +23,7 @@
       <a href="#settori">Settori</a>
       <a href="#vantaggi">Vantaggi</a>
       <a href="#dashboard">Dashboard</a>
+      <a href="#prezzi">Prezzi</a>
       <a href="#faq">FAQ</a>
     </nav>
     <a class="btn btn--orange btn--sm nav__cta" href="#demo">Richiedi una demo</a>
@@ -30,7 +31,7 @@
   </header>
   <div class="menu" id="menu" hidden>
     <nav aria-label="Menu mobile">
-      <a href="#storia">Come funziona</a><a href="#settori">Settori</a><a href="#vantaggi">Vantaggi</a><a href="#dashboard">Dashboard</a><a href="#faq">FAQ</a><a href="#demo">Richiedi una demo</a>
+      <a href="#storia">Come funziona</a><a href="#settori">Settori</a><a href="#vantaggi">Vantaggi</a><a href="#dashboard">Dashboard</a><a href="#prezzi">Prezzi</a><a href="#faq">FAQ</a><a href="#demo">Richiedi una demo</a>
     </nav>
   </div>
 
@@ -40,12 +41,11 @@
       <div class="story__sticky" id="top">
         <canvas class="story__canvas" aria-hidden="true"></canvas>
         <div class="story__fallback" aria-hidden="true">
-          <div class="pass pass--orange"><div class="pass__head"><span class="pass__ic">A</span><b>Caffè Aurora</b><span class="pass__val"><small>Timbri</small>7/10</span></div><div class="pass__stamps"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div><div class="pass__fields"><span><small>Premio</small>Caffè omaggio</span><span><small>Cliente</small>Giulia R.</span></div><div class="pass__qr"></div></div>
+          <div class="pass" data-pass="pizza"></div>
         </div>
 
         <div class="story__steps wrap">
           <div class="step step--hero is-on" data-step="0">
-            <p class="eyebrow"><span class="eyebrow__dot"></span>Per Apple Wallet e Google Wallet</p>
             <h1 class="hero__title">La carta fedeltà che i tuoi clienti <span class="hl">non perdono più.</span></h1>
             <p class="hero__lead">Fidelity Hub crea la carta fedeltà della tua attività e la mette nel telefono dei tuoi clienti. Timbri, premi e notifiche push, senza app da scaricare.</p>
             <div class="hero__ctas">
@@ -66,7 +66,7 @@
           <div class="step" data-step="3">
             <p class="step__n">03 / 03</p>
             <h2 class="step__title">Timbri e premi <span class="hl">in tempo reale.</span></h2>
-            <p class="step__text">Ogni acquisto aggiorna la carta all'istante. Al decimo caffè il premio è già lì, pronto da mostrare in cassa.</p>
+            <p class="step__text">Ogni acquisto aggiorna la carta all'istante. Al decimo timbro la pizza omaggio è già lì, pronta da mostrare in cassa.</p>
           </div>
         </div>
 
@@ -75,23 +75,14 @@
       </div>
     </section>
 
-    <!-- SETTORI MARQUEE -->
-    <div class="band" aria-hidden="true">
-      <div class="band__track">
-        <span>Bar e caffetterie</span><i></i><span>Ristoranti</span><i></i><span>Parrucchieri</span><i></i><span>Centri estetici</span><i></i><span>Palestre</span><i></i><span>Negozi</span><i></i><span>Farmacie</span><i></i><span>Panifici</span><i></i>
-        <span>Bar e caffetterie</span><i></i><span>Ristoranti</span><i></i><span>Parrucchieri</span><i></i><span>Centri estetici</span><i></i><span>Palestre</span><i></i><span>Negozi</span><i></i><span>Farmacie</span><i></i><span>Panifici</span><i></i>
-      </div>
-    </div>
-
     <!-- SETTORI -->
     <section class="sectors wrap" id="settori" aria-labelledby="set-t">
       <div class="sectors__copy">
-        <p class="kicker">Settori</p>
         <h2 class="h2" id="set-t">Per chiunque lavori <span class="hl">con il pubblico.</span></h2>
         <p class="lead">Ogni attività premia i clienti a modo suo. Scegli la tua e guarda come potrebbe essere la carta.</p>
         <div class="tabs" role="tablist" aria-label="Scegli un settore">
-          <button role="tab" aria-selected="true" data-sector="bar">Bar e caffetterie</button>
-          <button role="tab" aria-selected="false" data-sector="pizza">Ristoranti e pizzerie</button>
+          <button role="tab" aria-selected="true" data-sector="pizza">Ristoranti e pizzerie</button>
+          <button role="tab" aria-selected="false" data-sector="bar">Bar e caffetterie</button>
           <button role="tab" aria-selected="false" data-sector="hair">Parrucchieri e barbieri</button>
           <button role="tab" aria-selected="false" data-sector="beauty">Centri estetici</button>
           <button role="tab" aria-selected="false" data-sector="gym">Palestre e studi</button>
@@ -102,15 +93,9 @@
       </div>
       <div class="sectors__preview" role="tabpanel" aria-live="polite">
         <div class="tilt" data-tilt>
-          <div class="pass pass--live" id="livePass">
-            <div class="pass__head"><span class="pass__ic" data-f="ic">A</span><b data-f="name">Caffè Aurora</b><span class="pass__val"><small data-f="unitLabel">Timbri</small><span data-f="value">7/10</span></span></div>
-            <div class="pass__stamps" data-f="stamps"></div>
-            <div class="pass__fields"><span><small>Premio</small><span data-f="reward">Caffè omaggio</span></span><span><small>Cliente</small>Giulia R.</span></div>
-            <div class="pass__qr"></div>
-            <span class="pass__brand wm" aria-hidden="true"></span>
-          </div>
+          <div class="pass pass--live" id="livePass"></div>
         </div>
-        <p class="sectors__rule"><b data-f="rule">Ogni 10 caffè, uno lo offri tu.</b><span data-f="idea">Idea notifica: «Piove? Il cappuccino oggi lo offriamo noi dalle 15 alle 17.»</span></p>
+        <p class="sectors__rule"><b data-f="rule">Al decimo timbro, la pizza la offri tu.</b><span data-f="idea">Idea notifica: «Stasera la seconda pizza costa la metà.»</span></p>
       </div>
     </section>
 
@@ -125,8 +110,8 @@
           <article class="tile tile--big tile--dark">
             <div class="tile__art art-push" aria-hidden="true">
               <div class="np np--3"><span class="np__ic"></span><span><b>Fit Lab <em>2 h fa</em></b><small>Ti aspettiamo domani alle 18!</small></span></div>
-              <div class="np np--2"><span class="np__ic"></span><span><b>Pizzeria Da Gino <em>1 h fa</em></b><small>Stasera la seconda pizza costa la metà.</small></span></div>
-              <div class="np np--1"><span class="np__ic"></span><span><b>Caffè Aurora <em>ora</em></b><small>Ti manca un timbro al caffè omaggio!</small></span></div>
+              <div class="np np--2"><span class="np__ic"></span><span><b>Bar Gino <em>1 h fa</em></b><small>Domani colazione 2×1 fino alle 11.</small></span></div>
+              <div class="np np--1"><span class="np__ic"></span><span><b>Pizzeria da Aurora <em>ora</em></b><small>Ti manca un timbro alla pizza omaggio!</small></span></div>
             </div>
             <h3>Notifiche push prioritarie</h3>
             <p>Arrivano sulla schermata di blocco del cliente. Le scrivi in un minuto e le mandi a tutti o solo a chi non passa da un po'.</p>
@@ -189,17 +174,15 @@
       </div>
     </section>
 
-    <!-- COME FUNZIONA PER TE -->
-    <section class="how" aria-labelledby="how-t">
-      <div class="wrap">
-        <p class="kicker">Per la tua attività</p>
-        <h2 class="h2" id="how-t">Parti in <span class="hl">tre passi.</span></h2>
-        <ol class="how__steps">
-          <li><span class="how__n">1</span><h3>Disegniamo la tua carta</h3><p>Logo, colori, premi e regole. La prepariamo noi e la approvi tu.</p></li>
-          <li><span class="how__n">2</span><h3>I clienti la aggiungono</h3><p>Ti diamo il QR da mettere al bancone, sullo scontrino e sui social. Un tocco e sono iscritti.</p></li>
-          <li><span class="how__n">3</span><h3>Tu premi e comunichi</h3><p>Timbri dal telefono, premi automatici e notifiche quando vuoi tu.</p></li>
-        </ol>
-      </div>
+    <!-- COME FUNZIONA IN CASSA -->
+    <section class="how wrap" aria-labelledby="how-t">
+      <p class="kicker">In cassa</p>
+      <h2 class="h2" id="how-t">Come la usa <span class="hl">il tuo cliente.</span></h2>
+      <ol class="how__steps">
+        <li><span class="how__n" aria-hidden="true">1</span><h3>Il cliente inquadra il QR in cassa</h3><p>Lo trova sul bancone o sullo scontrino. Tocca «Aggiungi al Wallet» e la carta è sul suo telefono, senza app e senza creare un account.</p></li>
+        <li><span class="how__n" aria-hidden="true">2</span><h3>Riceve il timbro sul telefono</h3><p>A ogni acquisto inquadri il codice della sua carta dal tuo telefono. Il timbro compare sulla carta mentre è ancora alla cassa.</p></li>
+        <li><span class="how__n" aria-hidden="true">3</span><h3>Al decimo timbro ha il premio</h3><p>La carta gli mostra il premio pronto. Lo fa vedere in cassa, tu lo segni come usato e la raccolta riparte da zero.</p></li>
+      </ol>
     </section>
 
     <!-- DASHBOARD -->
@@ -210,7 +193,7 @@
         <p class="lead">Dalla dashboard scrivi il messaggio, scegli a chi mandarlo e lo vedi arrivare. Prova qui sotto.</p>
         <form class="composer" id="composer" onsubmit="return false">
           <label for="msg">Il tuo messaggio</label>
-          <textarea id="msg" maxlength="110" rows="3">Solo oggi: colazione 2×1 fino alle 11. Mostra la carta in cassa ☕</textarea>
+          <textarea id="msg" maxlength="110" rows="3">Stasera la seconda pizza costa la metà. Mostra la carta in cassa 🍕</textarea>
           <div class="composer__row">
             <fieldset class="seg"><legend class="sr">Destinatari</legend>
               <label><input type="radio" name="to" value="tutti" checked><span>Tutti</span></label>
@@ -235,10 +218,59 @@
           <div class="mini-phone__screen">
             <p class="mini-phone__time">9:41</p>
             <p class="mini-phone__date">martedì 10 novembre</p>
-            <div class="np np--live" id="notifPreview"><span class="np__ic"></span><span><b>Caffè Aurora <em>ora</em></b><small id="notifText"></small></span></div>
+            <div class="np np--live" id="notifPreview"><span class="np__ic"></span><span><b>Pizzeria da Aurora <em>ora</em></b><small id="notifText"></small></span></div>
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- PREZZI -->
+    <section class="pricing wrap" id="prezzi" aria-labelledby="prezzi-t">
+      <p class="kicker">Prezzi</p>
+      <h2 class="h2" id="prezzi-t">Un piano per ogni <span class="hl">attività.</span></h2>
+      <p class="pricing__setup"><strong>Attivazione una tantum: €100</strong><span>Vale per tutti i piani.</span></p>
+      <ul class="plans">
+        <li class="plan">
+          <h3 class="plan__name">Basic</h3>
+          <p class="plan__price"><strong>€30</strong><span>/mese</span></p>
+          <ul class="plan__list">
+            <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>Carta fedeltà digitale</strong></span></li>
+            <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>Notifiche push</strong></span></li>
+          </ul>
+          <a class="btn btn--ink plan__btn" href="#demo" data-plan="Basic">Scegli Basic</a>
+        </li>
+        <li class="plan plan--hot">
+          <p class="plan__badge">Il più scelto</p>
+          <h3 class="plan__name">Medium</h3>
+          <p class="plan__price"><strong>€50</strong><span>/mese</span></p>
+          <ul class="plan__list">
+            <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Tutto il piano Basic</span></li>
+            <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>Geolocalizzazione: notifica quando il cliente è vicino all'attività</strong></span></li>
+          </ul>
+          <a class="btn btn--orange plan__btn" href="#demo" data-plan="Medium">Scegli Medium</a>
+        </li>
+        <li class="plan">
+          <h3 class="plan__name">Premium</h3>
+          <p class="plan__price"><strong>€80</strong><span>/mese</span></p>
+          <ul class="plan__list">
+            <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Tutto il piano Basic e Medium</span></li>
+            <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>Invio SMS</strong></span></li>
+            <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>Invio email</strong></span></li>
+            <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>AI centralizzata automatica</strong></span></li>
+          </ul>
+          <a class="btn btn--ink plan__btn" href="#demo" data-plan="Premium">Scegli Premium</a>
+        </li>
+        <li class="plan">
+          <h3 class="plan__name">Enterprise</h3>
+          <p class="plan__price"><strong>Su richiesta</strong></p>
+          <ul class="plan__list">
+            <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span>Tutto il piano Premium</span></li>
+            <li><svg class="plan__ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg><span><strong>Soluzioni personalizzate per catene e più sedi</strong></span></li>
+          </ul>
+          <a class="btn btn--ink plan__btn" href="#demo" data-plan="Enterprise">Contattaci</a>
+        </li>
+      </ul>
+      <p class="pricing__note">Prezzi IVA esclusa.</p>
     </section>
 
     <!-- FAQ -->
@@ -270,6 +302,9 @@
           <div class="field"><label for="d-type">Settore</label>
             <select id="d-type" name="settore"><option>Bar o caffetteria</option><option>Ristorante o pizzeria</option><option>Parrucchiere o barbiere</option><option>Centro estetico</option><option>Palestra o studio</option><option>Negozio</option><option>Farmacia</option><option>Panificio o pasticceria</option><option>Altro</option></select>
           </div>
+          <div class="field"><label for="d-plan">Piano che ti interessa</label>
+            <select id="d-plan" name="piano"><option>Non lo so ancora</option><option>Basic</option><option>Medium</option><option>Premium</option><option>Enterprise</option></select>
+          </div>
           <div class="field"><label for="d-mail">Email</label><input id="d-mail" name="email" type="email" autocomplete="email" required><span class="field__err" aria-live="polite"></span></div>
           <div class="field"><label for="d-tel">Telefono (facoltativo)</label><input id="d-tel" name="telefono" type="tel" autocomplete="tel"></div>
           <label class="check"><input type="checkbox" name="privacy" required><span>Ho letto l'<a href="#privacy">informativa privacy</a>.</span></label>
@@ -284,7 +319,7 @@
   <footer class="footer">
     <div class="wrap footer__top">
       <span class="wm wm--white footer__wm" aria-hidden="true"></span>
-      <nav aria-label="Piè di pagina"><a href="#storia">Come funziona</a><a href="#settori">Settori</a><a href="#vantaggi">Vantaggi</a><a href="#faq">FAQ</a><a href="#demo">Demo</a></nav>
+      <nav aria-label="Piè di pagina"><a href="#storia">Come funziona</a><a href="#settori">Settori</a><a href="#vantaggi">Vantaggi</a><a href="#prezzi">Prezzi</a><a href="#faq">FAQ</a><a href="#demo">Demo</a></nav>
     </div>
     <div class="wrap footer__bottom">
       <span>© <span data-year>2026</span> Fidelity Hub · FOF SOLUTIONS SRLS · P.IVA 05112080238</span>
@@ -337,7 +372,7 @@
   <script src="vendor/lenis.min.js"></script>
   <script src="vendor/gsap.min.js"></script>
   <script src="vendor/ScrollTrigger.min.js"></script>
-  <script src="main.js?v=20261127"></script>
-  <script type="module" src="scene.js?v=20261127"></script>
+  <script src="main.js?v=20261127b"></script>
+  <script type="module" src="scene.js?v=20261127b"></script>
 </body>
 </html>

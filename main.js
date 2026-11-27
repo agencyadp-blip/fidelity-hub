@@ -106,12 +106,14 @@
     finder(0, 0); finder(14, 0); finder(0, 14);
     return `<svg viewBox="0 0 21 21" fill="#161618" shape-rendering="crispEdges" aria-hidden="true">${cells.join("")}</svg>`;
   };
-  $$(".pass__qr").forEach((el, i) => (el.innerHTML = qr(17 + i * 31)));
 
-  /* ---------- settori: carta che cambia ---------- */
+  /* ---------- carta fedeltà (DOM) ---------- */
+  // fetta di pizza: crosta, pomodoro e salame
+  const slice = (cls = "") => `<svg class="slice ${cls}" viewBox="0 0 32 32" aria-hidden="true"><path class="slice__cheese" d="M6.4 10.6Q16 5.4 25.6 10.6L17 27.6Q16 29.2 15 27.6Z"/><path class="slice__crust" d="M5.2 9.2Q16 2.8 26.8 9.2"/><circle class="slice__pep" cx="13" cy="13.4" r="2.1"/><circle class="slice__pep" cx="19.2" cy="14.6" r="1.8"/><circle class="slice__pep" cx="15.8" cy="20.2" r="1.6"/></svg>`;
+  const LOGO = { pizza: `<span class="pass__logo">${slice()}</span>` };
   const SECTORS = {
-    bar:    { name: "Caffè Aurora", ic: "A", bg: "#FD6B11", fg: "#FFFFFF", acc: "#FFFFFF", unit: "Timbri", on: 7, tot: 10, reward: "Caffè omaggio", rule: "Ogni 10 caffè, uno lo offri tu.", idea: "Idea notifica: «Piove? Dalle 15 alle 17 il cappuccino lo offriamo noi.»" },
-    pizza:  { name: "Pizzeria Da Gino", ic: "G", bg: "#161618", fg: "#FFFFFF", acc: "#FD6B11", unit: "Pizze", on: 4, tot: 8, reward: "Margherita omaggio", rule: "Ogni 8 pizze, la nona è della casa.", idea: "Idea notifica: «Stasera la seconda pizza costa la metà.»" },
+    pizza:  { name: "Pizzeria da Aurora", logo: "pizza", stamp: "pizza", bg: "#B5341C", fg: "#FFF4E6", acc: "#FFF4E6", unit: "Timbri", on: 7, tot: 10, reward: "Al 10° timbro una pizza in omaggio", rule: "Al decimo timbro, la pizza la offri tu.", idea: "Idea notifica: «Stasera la seconda pizza costa la metà.»" },
+    bar:    { name: "Bar Gino", ic: "G", bg: "#FD6B11", fg: "#FFFFFF", acc: "#FFFFFF", unit: "Timbri", on: 7, tot: 10, reward: "Caffè omaggio", rule: "Ogni 10 caffè, uno lo offri tu.", idea: "Idea notifica: «Piove? Dalle 15 alle 17 il cappuccino lo offriamo noi.»" },
     hair:   { name: "Studio Capelli", ic: "S", bg: "#F1E6DA", fg: "#161618", acc: "#161618", unit: "Tagli", on: 3, tot: 5, reward: "Piega omaggio", rule: "Ogni 5 tagli, una piega in regalo.", idea: "Idea notifica: «Sabato mattina ci sono ancora posti liberi.»" },
     beauty: { name: "Centro Iris", ic: "I", bg: "#E9CFC7", fg: "#161618", acc: "#161618", unit: "Trattamenti", on: 2, tot: 6, reward: "Trattamento viso", rule: "Al sesto trattamento, il viso è in regalo.", idea: "Idea notifica: «Buon compleanno! Questo mese hai uno sconto del 20%.»" },
     gym:    { name: "Fit Lab", ic: "F", bg: "#1F3A2E", fg: "#FFFFFF", acc: "#C9F27A", unit: "Ingressi", on: 9, tot: 10, reward: "Ingresso amico", rule: "Ogni 10 ingressi, porti un amico gratis.", idea: "Idea notifica: «Non ti vediamo da due settimane: domani lezione di prova per te e un amico.»" },
@@ -119,18 +121,31 @@
     pharma: { name: "Farmacia Centrale", ic: "+", bg: "#0E6B50", fg: "#FFFFFF", acc: "#FFFFFF", unit: "Visite", on: 5, tot: 10, reward: "Buono parafarmacia", rule: "Premi su parafarmaco e cosmesi.", idea: "Idea notifica: «Giovedì misurazione della pressione gratuita in farmacia.»" },
     bakery: { name: "Forno Bianchi", ic: "B", bg: "#F4D29C", fg: "#161618", acc: "#161618", unit: "Spese", on: 10, tot: 12, reward: "Torta della domenica", rule: "Alla dodicesima spesa, la torta è nostra.", idea: "Idea notifica: «Il pane caldo esce alle 17: passa a prenderlo.»" },
   };
+  const renderPass = (el, d, seed) => {
+    el.style.setProperty("--bg", d.bg); el.style.setProperty("--fg", d.fg); el.style.setProperty("--acc", d.acc);
+    const cols = Math.min(d.tot, d.tot > 10 ? 6 : 5);
+    const stamps = Array.from({ length: d.tot }, (_, i) => `<i class="${i < d.on ? "on" : ""}">${d.stamp === "pizza" ? slice(i < d.on ? "" : "slice--off") : ""}</i>`).join("");
+    el.classList.toggle("pass--icons", !!d.stamp);
+    el.innerHTML = `
+      <div class="pass__head">
+        ${d.logo ? LOGO[d.logo] : `<span class="pass__ic">${d.ic}</span>`}
+        <span class="pass__id"><small>Carta fedeltà</small><b>${d.name}</b></span>
+        <span class="pass__val"><small>${d.unit}</small>${d.on}/${d.tot}</span>
+      </div>
+      <div class="pass__stamps" style="grid-template-columns: repeat(${cols}, 1fr)">${stamps}</div>
+      <div class="pass__fields"><span><small>Premio</small>${d.reward}</span><span><small>Cliente</small>Giulia R.</span></div>
+      <div class="pass__qr">${qr(seed)}</div>
+      <span class="pass__brand wm" aria-hidden="true"></span>`;
+  };
+  $$("[data-pass]").forEach((el, i) => renderPass(el, SECTORS[el.dataset.pass], 17 + i * 31));
+
+  /* ---------- settori: carta che cambia ---------- */
   const live = $("#livePass");
-  const setSector = (key) => {
+  const setSector = (key, animate = true) => {
     const d = SECTORS[key];
-    live.style.setProperty("--bg", d.bg); live.style.setProperty("--fg", d.fg); live.style.setProperty("--acc", d.acc);
-    const f = (n) => $(`[data-f="${n}"]`);
-    f("ic").textContent = d.ic; f("name").textContent = d.name; f("unitLabel").textContent = d.unit;
-    f("value").textContent = `${d.on}/${d.tot}`; f("reward").textContent = d.reward;
-    f("rule").textContent = d.rule; f("idea").textContent = d.idea;
-    const st = f("stamps");
-    st.style.gridTemplateColumns = `repeat(${Math.min(d.tot, d.tot > 10 ? 6 : 5)}, 1fr)`;
-    st.innerHTML = Array.from({ length: d.tot }, (_, i) => `<i class="${i < d.on ? "on" : ""}"></i>`).join("");
-    if (hasGsap && !reduce) gsap.from(live, { rotateY: -30, scale: 0.94, duration: 0.9, ease: "expo.out", clearProps: "rotate,scale" });
+    renderPass(live, d, 48);
+    $('[data-f="rule"]').textContent = d.rule; $('[data-f="idea"]').textContent = d.idea;
+    if (animate && hasGsap && !reduce) gsap.from(live, { rotateY: -30, scale: 0.94, duration: 0.9, ease: "expo.out", clearProps: "rotate,scale" });
   };
   const tabs = $$("[data-sector]");
   tabs.forEach((b) => b.addEventListener("click", () => {
@@ -145,7 +160,7 @@
     const n = tabs[(i + (e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : tabs.length - 1)) % tabs.length];
     n.focus(); n.click();
   });
-  setSector("bar");
+  setSector("pizza", false);
 
   /* carta che si inclina col mouse */
   if (fine && !reduce) $$("[data-tilt]").forEach((wrap) => {
@@ -185,23 +200,39 @@
     if (!p.checked && !first) first = p;
     if (first) return first.focus();
     const fd = new FormData(form);
-    const body = ["Nome: " + fd.get("nome"), "Attività: " + fd.get("attivita"), "Settore: " + fd.get("settore"), "Email: " + fd.get("email"), "Telefono: " + (fd.get("telefono") || "—")].join("\n");
+    const body = ["Nome: " + fd.get("nome"), "Attività: " + fd.get("attivita"), "Settore: " + fd.get("settore"), "Piano: " + fd.get("piano"), "Email: " + fd.get("email"), "Telefono: " + (fd.get("telefono") || "—")].join("\n");
     location.href = `mailto:info@fidelityhub.it?subject=${encodeURIComponent("Richiesta demo — " + fd.get("attivita"))}&body=${encodeURIComponent(body)}`;
     const ok = $(".form__ok"); ok.hidden = false;
     ok.textContent = "Si è aperta la tua app di posta con la richiesta pronta: premi invia e ti contattiamo entro un giorno lavorativo.";
   });
+  $$("[data-plan]").forEach((b) => b.addEventListener("click", () => { form.elements.piano.value = b.dataset.plan; }));
   form.addEventListener("input", (e) => { if (e.target.closest(".is-bad")) show(e.target, ""); });
+
+  /* ---------- ingressi delle card allo scroll ---------- */
+  // lo spazio è già occupato: si animano solo opacity e transform; con riduzione del movimento restano visibili
+  if (!reduce && "IntersectionObserver" in window) {
+    const items = $$(".h2, .tabs, .tile, .cmp tbody tr, .how__steps li, .plan, .faq__list details");
+    const done = (el) => { el.classList.remove("rv", "rv--in"); el.style.transitionDelay = ""; };
+    const io = new IntersectionObserver((entries) => {
+      const inn = entries.filter((e) => e.isIntersecting).map((e) => e.target);
+      inn.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top || a.getBoundingClientRect().left - b.getBoundingClientRect().left);
+      inn.forEach((el, k) => {
+        io.unobserve(el);
+        el.style.transitionDelay = `${Math.min(k, 6) * 70}ms`;
+        el.classList.add("rv--in");
+        el.addEventListener("transitionend", (e) => { if (e.target === el && e.propertyName === "opacity") done(el); });
+        setTimeout(() => done(el), 1200 + k * 70);
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px 8% 0px" });
+    items.forEach((el) => {
+      // ciò che è già sullo schermo (o sopra) all'avvio non si anima
+      if (el.getBoundingClientRect().top < innerHeight * 0.9) return;
+      el.classList.add("rv"); io.observe(el);
+    });
+  }
 
   if (!hasGsap || reduce) return;
 
-  /* ---------- ingressi ---------- */
-  const up = (sel, trig, extra = {}) => gsap.from(sel, { y: 50, opacity: 0, duration: 1.1, stagger: 0.08, ease: "expo.out", scrollTrigger: { trigger: trig, start: "top 82%" }, ...extra });
-  $$(".h2").forEach((h) => up(h, h));
-  up(".tabs button", ".tabs", { y: 20, stagger: 0.04 });
-  up(".tile", ".bento");
-  up(".cmp tbody tr", ".cmp", { y: 20 });
-  up(".how__steps li", ".how__steps");
-  up(".faq__list details", ".faq__list", { y: 24 });
   [".chart", ".art-chart"].forEach((s) => gsap.from(`${s} i`, { scaleY: 0, duration: 1.2, stagger: 0.05, ease: "expo.out", scrollTrigger: { trigger: s, start: "top 88%" } }));
   $$("[data-count]").forEach((el) => {
     const o = { v: 0 }, to = +el.dataset.count, suf = el.dataset.suf || "";

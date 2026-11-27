@@ -31,8 +31,8 @@ function track(ctx, px) { if ("letterSpacing" in ctx) ctx.letterSpacing = px + "
 
 /* ---------------- dati delle carte ---------------- */
 const CARDS = [
-  { key: "aurora", name: "Caffè Aurora", ic: "A", bg: "#FD6B11", fg: "#FFFFFF", acc: "#FFFFFF", accFg: "#FD6B11", edge: "#E05A06", unit: "TIMBRI", on: 7, tot: 10, reward: "Caffè omaggio" },
-  { key: "gino", name: "Pizzeria Da Gino", ic: "G", bg: "#161618", fg: "#FFFFFF", acc: "#FD6B11", accFg: "#161618", edge: "#0B0B0C", unit: "PIZZE", on: 4, tot: 8, reward: "Margherita omaggio" },
+  { key: "aurora", name: "Pizzeria da Aurora", pizza: true, bg: "#B5341C", fg: "#FFF4E6", acc: "#FFF4E6", accFg: "#B5341C", edge: "#8E2714", unit: "TIMBRI", on: 7, tot: 10, reward: "Al 10° timbro una pizza in omaggio", prize: "Pizza omaggio" },
+  { key: "gino", name: "Bar Gino", ic: "G", bg: "#161618", fg: "#FFFFFF", acc: "#FD6B11", accFg: "#161618", edge: "#0B0B0C", unit: "CAFFÈ", on: 4, tot: 8, reward: "Caffè omaggio" },
   { key: "capelli", name: "Studio Capelli", ic: "S", bg: "#F1E6DA", fg: "#161618", acc: "#161618", accFg: "#F1E6DA", edge: "#D9CBBB", unit: "TAGLI", on: 3, tot: 5, reward: "Piega omaggio" },
   { key: "fit", name: "Fit Lab", ic: "F", bg: "#1F3A2E", fg: "#FFFFFF", acc: "#C9F27A", accFg: "#1F3A2E", edge: "#152A20", unit: "INGRESSI", on: 9, tot: 10, reward: "Ingresso amico" },
 ];
@@ -52,6 +52,23 @@ function drawQR(ctx, x, y, size, seed) {
   finder(0, 0); finder(N - 7, 0); finder(0, N - 7);
 }
 
+/* fetta di pizza (stessi tracciati dell'icona SVG della pagina) */
+const SLICE = { cheese: new Path2D("M6.4 10.6Q16 5.4 25.6 10.6L17 27.6Q16 29.2 15 27.6Z"), crust: new Path2D("M5.2 9.2Q16 2.8 26.8 9.2"), pep: [[13, 13.4, 2.1], [19.2, 14.6, 1.8], [15.8, 20.2, 1.6]] };
+function drawSlice(x, cx, cy, size, off, line) {
+  x.save(); x.translate(cx - size / 2, cy - size / 2); x.scale(size / 32, size / 32);
+  x.lineCap = "round"; x.lineJoin = "round";
+  if (off) {
+    x.strokeStyle = line; x.lineWidth = 1.4; x.stroke(SLICE.cheese);
+    SLICE.pep.forEach(([a, b, r]) => { x.beginPath(); x.arc(a, b, r, 0, Math.PI * 2); x.stroke(); });
+    x.lineWidth = 2.2; x.stroke(SLICE.crust);
+  } else {
+    x.fillStyle = "#F6BE45"; x.fill(SLICE.cheese);
+    x.strokeStyle = "#DC8530"; x.lineWidth = 3.4; x.stroke(SLICE.crust);
+    x.fillStyle = "#C23B21"; SLICE.pep.forEach(([a, b, r]) => { x.beginPath(); x.arc(a, b, r, 0, Math.PI * 2); x.fill(); });
+  }
+  x.restore();
+}
+
 function drawPass(d, imgs, complete = false) {
   const W = 640, H = 896, pad = 46;
   const c = document.createElement("canvas"); c.width = W; c.height = H;
@@ -60,9 +77,19 @@ function drawPass(d, imgs, complete = false) {
   const g = x.createLinearGradient(0, 0, W * 0.8, H * 0.6); g.addColorStop(0, "rgba(255,255,255,.16)"); g.addColorStop(0.5, "rgba(255,255,255,0)");
   x.fillStyle = g; x.fillRect(0, 0, W, H);
   // intestazione
-  x.globalAlpha = 0.2; x.fillStyle = d.fg; x.beginPath(); x.arc(pad + 30, 84, 32, 0, Math.PI * 2); x.fill(); x.globalAlpha = 1;
-  x.fillStyle = d.fg; x.textAlign = "center"; x.textBaseline = "middle"; x.font = `800 32px ${DISPLAY}`; x.fillText(d.ic, pad + 30, 86);
-  x.textAlign = "left"; x.font = `800 ${d.name.length > 14 ? 30 : 34}px ${DISPLAY}`; track(x, -0.5); x.fillText(d.name, pad + 76, 86); track(x, 0);
+  if (d.pizza) {
+    // logo: medaglione color crema con la fetta
+    x.globalAlpha = 0.3; x.fillStyle = d.fg; x.beginPath(); x.arc(pad + 34, 84, 41, 0, Math.PI * 2); x.fill(); x.globalAlpha = 1;
+    x.fillStyle = "#FFF4E6"; x.beginPath(); x.arc(pad + 34, 84, 36, 0, Math.PI * 2); x.fill();
+    drawSlice(x, pad + 34, 85, 46, false);
+    x.fillStyle = d.fg; x.textAlign = "left"; x.textBaseline = "middle";
+    x.globalAlpha = 0.75; x.font = `700 15px ${BODY}`; track(x, 2); x.fillText("CARTA FEDELTÀ", pad + 90, 64); track(x, 0); x.globalAlpha = 1;
+    x.font = `800 31px ${DISPLAY}`; track(x, -0.5); x.fillText(d.name, pad + 90, 100); track(x, 0);
+  } else {
+    x.globalAlpha = 0.2; x.fillStyle = d.fg; x.beginPath(); x.arc(pad + 30, 84, 32, 0, Math.PI * 2); x.fill(); x.globalAlpha = 1;
+    x.fillStyle = d.fg; x.textAlign = "center"; x.textBaseline = "middle"; x.font = `800 32px ${DISPLAY}`; x.fillText(d.ic, pad + 30, 86);
+    x.textAlign = "left"; x.font = `800 ${d.name.length > 14 ? 30 : 34}px ${DISPLAY}`; track(x, -0.5); x.fillText(d.name, pad + 76, 86); track(x, 0);
+  }
   const on = complete ? d.tot : d.on;
   x.textAlign = "right"; x.globalAlpha = 0.75; x.font = `700 16px ${BODY}`; track(x, 2); x.fillText(d.unit, W - pad, 64); track(x, 0); x.globalAlpha = 1;
   x.font = `800 38px ${DISPLAY}`; x.fillText(`${on}/${d.tot}`, W - pad, 104);
@@ -74,7 +101,10 @@ function drawPass(d, imgs, complete = false) {
     const col = k % cols, row = Math.floor(k / cols);
     const cx = pad + cw * (col + 0.5) + ((5 - cols) * cw) / 2, cy = top + row * 92 + r;
     x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2);
-    if (k < on) {
+    if (d.pizza) {
+      if (k < on) { x.fillStyle = d.acc; x.fill(); drawSlice(x, cx, cy + 1, 46, false); }
+      else { x.globalAlpha = 0.12; x.fillStyle = d.fg; x.fill(); x.globalAlpha = 0.4; x.strokeStyle = d.fg; x.lineWidth = 3; x.stroke(); x.globalAlpha = 1; drawSlice(x, cx, cy + 1, 46, true, "rgba(255,244,230,.45)"); }
+    } else if (k < on) {
       x.fillStyle = d.acc; x.fill();
       x.strokeStyle = d.accFg; x.lineWidth = 7; x.lineCap = "round"; x.lineJoin = "round";
       x.beginPath(); x.moveTo(cx - 13, cy + 1); x.lineTo(cx - 3, cy + 11); x.lineTo(cx + 15, cy - 10); x.stroke();
@@ -85,7 +115,11 @@ function drawPass(d, imgs, complete = false) {
   x.textAlign = "left"; x.fillStyle = d.fg;
   if (complete) {
     x.fillStyle = d.acc; rr(x, pad, 420, W - pad * 2, 96, 48); x.fill();
-    x.fillStyle = d.accFg; x.textAlign = "center"; x.font = `800 30px ${DISPLAY}`; x.fillText(`Premio pronto · ${d.reward}`, W / 2, 470);
+    x.fillStyle = d.accFg; x.textAlign = "center"; x.font = `800 30px ${DISPLAY}`; x.fillText(`Premio pronto · ${d.prize || d.reward}`, W / 2, 470);
+  } else if (d.pizza) {
+    x.globalAlpha = 0.75; x.font = `700 16px ${BODY}`; track(x, 2); x.fillText("PREMIO", pad, 432); x.textAlign = "right"; x.fillText("CLIENTE", W - pad, 432); track(x, 0); x.globalAlpha = 1;
+    x.font = `700 26px ${BODY}`; x.textAlign = "left"; x.fillText("Al 10° timbro una", pad, 468); x.fillText("pizza in omaggio", pad, 502);
+    x.textAlign = "right"; x.fillText("Giulia R.", W - pad, 468);
   } else {
     x.globalAlpha = 0.75; x.font = `700 16px ${BODY}`; track(x, 2); x.fillText("PREMIO", pad, 432); x.textAlign = "right"; x.fillText("CLIENTE", W - pad, 432); track(x, 0); x.globalAlpha = 1;
     x.font = `700 28px ${BODY}`; x.textAlign = "left"; x.fillText(d.reward, pad, 474); x.textAlign = "right"; x.fillText("Giulia R.", W - pad, 474);
@@ -159,10 +193,10 @@ function drawNotif(imgs) {
   x.shadowColor = "transparent";
   x.fillStyle = "#FD6B11"; rr(x, m + 34, m + 70, 110, 110, 28); x.fill();
   const inf = imgs.inf["#FFFFFF"]; const iw = 82, ih = iw * (inf.height / inf.width); x.drawImage(inf, m + 34 + 55 - iw / 2, m + 125 - ih / 2, iw, ih);
-  x.fillStyle = "#161618"; x.textAlign = "left"; x.textBaseline = "alphabetic"; x.font = `800 36px ${DISPLAY}`; x.fillText("Caffè Aurora", m + 172, m + 96);
+  x.fillStyle = "#161618"; x.textAlign = "left"; x.textBaseline = "alphabetic"; x.font = `800 36px ${DISPLAY}`; x.fillText("Pizzeria da Aurora", m + 172, m + 96);
   x.fillStyle = "#8A847E"; x.textAlign = "right"; x.font = `600 27px ${BODY}`; x.fillText("ora", W - m - 36, m + 94);
   x.fillStyle = "#2B2B2E"; x.textAlign = "left"; x.font = `500 30px ${BODY}`;
-  x.fillText("Solo oggi: colazione 2×1 fino alle 11.", m + 172, m + 146); x.fillText("Mostra la carta in cassa.", m + 172, m + 188);
+  x.fillText("Stasera la seconda pizza costa la metà.", m + 172, m + 146); x.fillText("Mostra la carta in cassa.", m + 172, m + 188);
   return c;
 }
 
@@ -172,7 +206,7 @@ async function init() {
   await Promise.race([fontsReady, new Promise((r) => setTimeout(r, 2500))]);
   const [wmImg, infImg] = await Promise.all([loadImg("assets/wordmark-white.png"), loadImg("assets/infinity-white.png")]);
   const imgs = { wm: {}, inf: {} };
-  ["#FFFFFF", "#161618"].forEach((col) => { imgs.wm[col] = tint(wmImg, col); imgs.inf[col] = tint(infImg, col); });
+  ["#FFFFFF", "#161618", "#FFF4E6"].forEach((col) => { imgs.wm[col] = tint(wmImg, col); imgs.inf[col] = tint(infImg, col); });
 
   // telefoni e tablet in verticale: testo sopra, scena sotto (come in style.css)
   const mobileQ = () => matchMedia("(max-width: 760px), (max-width: 1100px) and (orientation: portrait)").matches;
